@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>sample02 GSAP ScrollTrigger</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="intro">
+        <p>インタビューのデモサイトです。</p>
+      </section>
+      <!-- 01 -->
+      <section class="interview js-reveal">
+        <p class="speaker">mizui</p>
+        <p class="line">はじめます。じゃあまず自己紹介お願いします。名前と大学名と体重と…ですね。</p>
+        <p class="speaker">O</p>
+        <p class="line">名前は尾崎しょうのすけ。法政大学2年のSD学科です。
+   体重はわかってないんですけど、60はあってほしいですね。
+   まぁ60くらいだと思ってます。</p>
+      </section>
+      <!-- 02 -->
+      <section class="interview js-reveal">
+        <p class="speaker">mizui</p>
+        <p class="line">最近ハマってることは？</p>
+        <p class="speaker">O</p>
+        <p class="line">最近は…なんだろう。「うじと上田」っていうYouTubeです…めちゃくちゃ面白いです。</p>
+      </section>
+      <!-- 03 -->
+      <section class="interview js-reveal">
+        <p class="speaker">mizui</p>
+        <p class="line">じゃあ早速、質問に入ります。まず、sd学科選んだ理由を教えてください。</p>
+        <p class="speaker">O</p>
+        <p class="line">まず僕、内部生なんですけど、法政大学自体には行ける成績はありました。
+   で、学科をどこにしようかなって考えたときに、数学は好きだったので理系に行こうと思ってました。
+   でも小金井キャンパスの理工学部だと、パソコンをカタカタ、プログラミングをやるイメージがあって、
+   そっち系は別にいいかなと。
+   科学とか生物もそこまで好きじゃなかったので、いいかな〜って。
+   そういう中でSD学科が一番楽しそうだったので選びました。</p>
+      </section>
+      <!-- 04 -->
+      <section class="interview js-reveal">
+        <p class="speaker">mizui</p>
+        <p class="line">理系で数学とかをメインに勉強してきたんですか？</p>
+        <p class="speaker">O</p>
+        <p class="line">はい。しかし大学では映像とかAdobeとかを使ってます。
+   サークルの先輩の引退動画を作ったことがあって、ああいうのは面白いです。
+   デザインの面ではまってる感じです。</p>
+      </section>
+      <!-- 05 -->
+      <section class="interview js-reveal">
+        <p class="speaker">mizui</p>
+        <p class="line">将来はデザイン系に進みたいとか考えてますか？</p>
+        <p class="speaker">o</p>
+        <p class="line">いや、特には決めてないです。
+   でも、形として残らなくても“何かを生み出す側”の仕事はしたいと思ってます。
+   作家とかも、番組をゼロから1で作るじゃないですか。ああいうのも面白そうです。
+   さっき言った映像とかも、自分でゼロから作れるのは楽しいですね。</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="interview js-reveal">
+        <p class="speaker">mizui</p>
+        <p class="line">サークルは今どんな感じですか？</p>
+        <p class="speaker">O</p>
+        <p class="line">サークルは行くことは行きますけど、今みたいにめっちゃ行く感じではなくて、
+   ちょいちょい行くくらいにしようかなって感じです。</p>
+      </section>
+
+      <!-- 07 -->
+      <section class="interview js-reveal">
+        <p class="speaker">mizui</p>
+        <p class="line">今、何のサークルに所属してるんですか？</p>
+        <p class="speaker">o</p>
+        <p class="line">けいおんだけですね。音楽にはずっと触れてきました。
+   ずっと好きってほどではないですけど、中学受験のときに見たら遊んじゃうので音楽は好きでした…
+   高校で文化祭があって、部活も引退した後に、友達に「文化祭でバンドやろう」って言われて、
+   それでやったのがきっかけです。</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="interview js-reveal">
+        <p class="speaker">mizui</p>
+        <p class="line">そういうデザインをやりたいと考えたことは？</p>
+        <p class="speaker">o</p>
+        <p class="line">音楽やって、そのままアーティストになる人生も楽しかったんだろうなとは思います。</p>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="./functions.js"></script>
+  </body>
+</html>
