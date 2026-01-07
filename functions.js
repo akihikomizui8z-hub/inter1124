@@ -1,40 +1,118 @@
 gsap.registerPlugin(ScrollTrigger);
-//出現。対象要素をフェードインしながら上方向にスライドさせて表示する
-function animateIn(element) {
-gsap.to(element, {opacity: 1, y: 0, duration: 0.6, ease:"power2.out" });
-}
-//退場。対象要素をフェードアウトしながら下方向へ移動させて非表示にする
-function animateOut(element) {
-gsap.to(element, { opacity: 0, y: 24, duration: 0.4, ease:"power2.in" });
+
+// 出現
+function animateIn(el) {
+  gsap.to(el, {
+    opacity: 1,
+    y: 0,
+    duration: 0.6,
+    ease: "power2.out",
+    overwrite: "auto",
+  });
 }
 
-//指定要素にスクロール連動の出現・退場アニメーションを仕込むトリガーを生成する
-function createScrollTrigger(element) {
-gsap.set(element, { opacity: 0, y: 24 });
-return ScrollTrigger.create({
-trigger: element,
-start: "top 80%",
-end: "bottom 20%",
-onEnter: function () {
-animateIn(element);
-},
-onLeaveBack:function(){
-    animateIn(element);
-},
-onLeaveBack:function(){
-    animateOut(element);
-},
-markers: true,
-});
+// 退場（今回は「一度出たら消さない」運用なら使わなくてもOK）
+function animateOut(el) {
+  gsap.to(el, {
+    opacity: 0,
+    y: 24,
+    duration: 0.4,
+    ease: "power2.in",
+    overwrite: "auto",
+  });
 }
 
-//ページ内の対象要素群を取得し、各要素にスクロール表示トリガーを適用する
+// 本（表紙→開く）
+function setupBookMenu() {
+  const wrap = document.querySelector(".book-wrap");
+  if (!wrap) return;
+
+  gsap.set(".cover", { rotateY: 0 });
+  gsap.set(".spread", { opacity: 0, visibility: "hidden", pointerEvents: "none" });
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: ".book-wrap",
+      start: "top top",
+      end: "+=1200",
+      scrub: true,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+
+      // ピン区間が終わったら、本文側の位置を再計算
+      onLeave: () => ScrollTrigger.refresh(),
+      onLeaveBack: () => ScrollTrigger.refresh(),
+    },
+  })
+    .to(".cover", { rotateY: -160, ease: "none" }, 0)
+    .to(
+      ".spread",
+      {
+        opacity: 1,
+        visibility: "visible",
+        pointerEvents: "auto",
+        duration: 0.2,
+        ease: "none",
+      },
+      0.2
+    );
+}
+
+// 本文（会話）reveal：安定版
 function setupScrollEffects() {
-const elements = gsap.utils.toArray(".js-reveal");
-elements.forEach(function (el) {
-createScrollTrigger(el);
-});
+  const elements = gsap.utils.toArray(".js-reveal");
+
+  elements.forEach((el) => {
+    // 初期状態をJSで固定（CSSだけに頼らない）
+    gsap.set(el, { opacity: 0, y: 24 });
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: "top 85%",
+      onEnter: () => animateIn(el),
+      onEnterBack: () => animateIn(el),
+
+      // 「一度出たら消さない」なら下2つは不要（安定）
+      // onLeave: () => animateOut(el),
+      // onLeaveBack: () => animateOut(el),
+
+      invalidateOnRefresh: true,
+    });
+  });
 }
-setupScrollEffects();
+
+window.addEventListener("load", () => {
+  setupBookMenu();
+  setupScrollEffects();
+  setupChatReveal();     // ←追加
+  ScrollTrigger.refresh();
 
 
+
+  // フォント読み込み等でズレることがあるので二段refreshが安定
+  ScrollTrigger.refresh();
+  setTimeout(() => ScrollTrigger.refresh(), 100);
+});
+
+function setupChatReveal() {
+  const msgs = gsap.utils.toArray(".chat .msg");
+
+  msgs.forEach((el) => {
+    gsap.set(el, { opacity: 0, y: 16 });
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: "top 85%",
+      once: true, // 1回だけ出す（戻したら消える挙動にしたいなら外す）
+      onEnter: () => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      },
+    });
+  });
+}
